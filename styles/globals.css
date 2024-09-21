@@ -85,14 +85,15 @@
   }
 }
 
-.text-primary {
-  @apply text-[#4D5973];
+.embla {
+  overflow: hidden;
 }
 
-.primary-green {
-  @apply bg-[#32BAAE];
+.embla__container {
+  display: flex;
 }
 
-.primary-outline {
-  @apply border border-[#32BAAE] text-black;
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
 }

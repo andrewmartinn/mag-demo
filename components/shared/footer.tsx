@@ -46,6 +46,7 @@ export default function Footer() {
               alt="logo"
               width={170}
               height={30}
+              className="h-[30px] w-[170px]"
             />
             <ul className="mb-6 flex gap-8">
               {footerSocialLinks.map((item) => (
@@ -53,7 +54,7 @@ export default function Footer() {
                   <Image
                     src={item.url}
                     alt={item.alt}
-                    width={19.5}
+                    width={20}
                     height={20}
                     className="h-[20px] w-[20px] object-cover"
                   />

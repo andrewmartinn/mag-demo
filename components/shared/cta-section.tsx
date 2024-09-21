@@ -15,14 +15,11 @@ export default function CtaSection() {
         effective and enjoyable!
       </p>
       <div className="flex gap-8">
-        <Button
-          type="submit"
-          className="primary-green hover:bg-primary-green h-[48px] w-[170px] rounded-full font-semibold text-white shadow-none"
-        >
-          Book your demo
+        <Button className="bg-primary-400 hover:bg-primary-400 h-[48px] w-[170px] rounded-full font-semibold text-white shadow-none">
+          Schedule a call
         </Button>
         <Button
-          className="primary-outline h-[48px] w-[170px] rounded-full bg-white font-semibold shadow-none hover:bg-white"
+          className="border-primary-400 h-[48px] w-[170px] rounded-full border-2 bg-white font-semibold shadow-none hover:bg-white"
           variant="outline"
         >
           Free trial

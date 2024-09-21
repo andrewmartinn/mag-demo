@@ -16,7 +16,7 @@ export default function Banner() {
         <div className="flex gap-6">
           <Button
             variant="ghost"
-            className="flex h-[24px] items-center justify-between gap-2 rounded-full bg-[#F5F5F7] px-2 py-1 text-primary"
+            className="flex h-[24px] items-center justify-between gap-2 rounded-full bg-neutral-200 px-2 py-1 text-neutral-600"
           >
             <GlobeIcon />
             <span className="text-[10px] font-semibold">EN</span>
@@ -24,7 +24,7 @@ export default function Banner() {
           </Button>
           <Button
             variant="ghost"
-            className="flex h-[24px] items-center justify-between gap-2 rounded-full bg-[#F5F5F7] px-2 py-1 text-primary"
+            className="flex h-[24px] items-center justify-between gap-2 rounded-full bg-neutral-200 px-2 py-1 text-neutral-600"
           >
             <ChatIcon />
             <span className="text-[10px] font-semibold uppercase">
@@ -33,7 +33,7 @@ export default function Banner() {
           </Button>
           <Button
             variant="ghost"
-            className="flex h-[24px] items-center justify-between gap-2 rounded-full bg-[#F5F5F7] px-2 py-1 text-primary"
+            className="flex h-[24px] items-center justify-between gap-2 rounded-full bg-neutral-200 px-2 py-1 text-neutral-600"
           >
             <SupportIcon />
             <span className="text-[10px] font-semibold uppercase">Support</span>
@@ -43,7 +43,7 @@ export default function Banner() {
         <div className="flex gap-6">
           <Button
             variant="ghost"
-            className="flex h-[24px] items-center justify-between gap-2 rounded-full bg-[#F5F5F7] px-2 py-1 text-primary"
+            className="flex h-[24px] items-center justify-between gap-2 rounded-full bg-neutral-200 px-2 py-1 text-neutral-600"
           >
             <SystemIcon />
             <SunIcon />
@@ -51,7 +51,7 @@ export default function Banner() {
           </Button>
           <Button
             variant="ghost"
-            className="flex h-[24px] items-center justify-between gap-2 rounded-full bg-[#F5F5F7] px-2 py-1 text-primary"
+            className="flex h-[24px] items-center justify-between gap-2 rounded-full bg-neutral-200 px-2 py-1 text-neutral-600"
           >
             <UserIcon />
             <span className="text-[10px] font-semibold uppercase">Log in</span>

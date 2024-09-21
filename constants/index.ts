@@ -1,3 +1,5 @@
+import { Feature } from "@/lib/definitions";
+
 export const navLinks = [
   {
     id: 1,
@@ -87,3 +89,51 @@ export const footerSocialLinks = [
     alt: "Facebook",
   },
 ] as const;
+
+export const featuresData: Record<number, Feature> = {
+  1: {
+    title: "Effortless interface",
+    subtext: "Simplify your marketing",
+    images: [
+      "/images/feature-image-1.png",
+      "/images/feature-image-2.png",
+      "/images/feature-image-3.png",
+    ],
+  },
+  2: {
+    title: "Seamless connections",
+    subtext: "Total sync with your tools",
+    images: [
+      "/images/feature-image-4.png",
+      "/images/feature-image-5.png",
+      "/images/feature-image-6.png",
+    ],
+  },
+  3: {
+    title: "Tailored experience",
+    subtext: "Customise with ease",
+    images: [
+      "/images/feature-image-7.png",
+      "/images/feature-image-8.png",
+      "/images/feature-image-9.png",
+    ],
+  },
+  4: {
+    title: "All-in-One platform",
+    subtext: "Unified marketing mastery",
+    images: [
+      "/images/feature-image-10.png",
+      "/images/feature-image-11.png",
+      "/images/feature-image-12.png",
+    ],
+  },
+  5: {
+    title: "Smart insights",
+    subtext: "AI-powered marketing intelligence",
+    images: [
+      "/images/feature-image-14.png",
+      "/images/feature-image-15.png",
+      "/images/feature-image-16.png",
+    ],
+  },
+};
