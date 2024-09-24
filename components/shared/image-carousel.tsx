@@ -49,7 +49,7 @@ export default function ImageCarousel({
         emblaApi.off("select", onSelect);
       }
     };
-  }, [emblaApi]);
+  }, [emblaApi, totalImages]);
 
   // reset image index when feature changes
   useEffect(() => {
@@ -84,7 +84,7 @@ export default function ImageCarousel({
           <Button
             variant="outline"
             size="icon"
-            className="embla__prev border-primary-400 text-primary-400 h-[32px] w-[32px] border-2 bg-[#F1FCFB] hover:bg-[#F1FCFB]"
+            className="embla__prev h-[32px] w-[32px] border-2 border-primary-400 bg-[#F1FCFB] text-primary-400 hover:bg-[#F1FCFB]"
             onClick={scrollPrev}
           >
             <ArrowLeft className="size-5" />
@@ -96,7 +96,7 @@ export default function ImageCarousel({
           <Button
             variant="outline"
             size="icon"
-            className="embla__next border-primary-400 text-primary-400 h-[32px] w-[32px] border-2 bg-[#F1FCFB] hover:bg-[#F1FCFB]"
+            className="embla__next h-[32px] w-[32px] border-2 border-primary-400 bg-[#F1FCFB] text-primary-400 hover:bg-[#F1FCFB]"
             onClick={scrollNext}
           >
             <ArrowRight className="size-5" />
@@ -105,7 +105,7 @@ export default function ImageCarousel({
         <div className="mt-6 flex justify-center">
           <Progress
             value={progressValue}
-            className="text-primary-400 max-w-[200px]"
+            className="max-w-[200px] text-primary-400"
           />
         </div>
       </div>
