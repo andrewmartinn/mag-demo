@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "../ui/button";
+import ScheduleCallDiaglog from "./schedule-call-dialog";
 import { footerLinks, footerSocialLinks } from "@/constants";
 
 export default function Footer() {
@@ -19,9 +19,7 @@ export default function Footer() {
                   return (
                     <>
                       {isScheduleCall ? (
-                        <Button className="primary-green hover:bg-primary-green -ml-2 mt-4 h-[43px] w-[179px] rounded-full font-semibold text-white shadow-none">
-                          Schedule a call
-                        </Button>
+                        <ScheduleCallDiaglog isFooter />
                       ) : (
                         <li key={linkIndex}>
                           <Link

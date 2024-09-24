@@ -2,6 +2,7 @@ import { navLinks } from "@/constants";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import ScheduleCallDiaglog from "./schedule-call-dialog";
 
 export default function Navbar() {
   return (
@@ -18,7 +19,7 @@ export default function Navbar() {
           />
           <ul className="flex items-center gap-10">
             {navLinks.map((item) => (
-              <Link href={item.url}>
+              <Link href={item.url} key={item.id}>
                 <li className="text-[16px] font-semibold text-[#16504B]">
                   {item.name}
                 </li>
@@ -28,11 +29,9 @@ export default function Navbar() {
         </div>
         {/* buttons */}
         <div className="flex gap-5">
-          <Button className="bg-primary-400 hover:bg-primary-400 h-[48px] w-[170px] rounded-full font-semibold text-white shadow-none">
-            Schedule a call
-          </Button>
+          <ScheduleCallDiaglog />
           <Button
-            className="border-primary-400 h-[48px] w-[170px] rounded-full border-2 bg-white font-semibold shadow-none hover:bg-white"
+            className="h-[48px] w-[170px] rounded-full border-2 border-primary-400 bg-white font-semibold shadow-none hover:bg-white"
             variant="outline"
           >
             Free trial

@@ -97,3 +97,32 @@
   flex: 0 0 100%;
   min-width: 0;
 }
+
+.toggle-group [data-state="on"] {
+  background-color: #32baae !important; /* bg-green-500 */
+  color: #ffffff !important; /* text-white */
+}
+
+.toggle-group [data-state="off"] {
+  background-color: #ffffff !important; /* Default background */
+  color: #000000 !important; /* Default text color */
+}
+
+/* Reset the background for the parent td when a day is selected */
+.calendar-selected td {
+  background-color: transparent !important; /* Ensure transparency */
+}
+
+/* Target the selected day button */
+.calendar-selected .rdp-button[aria-selected="true"] {
+  background-color: #32baae !important; /* Selected day green */
+  color: #ffffff !important; /* Text color white */
+  border-radius: 9999px; /* Fully rounded */
+  z-index: 10; /* Bring to the front */
+}
+
+/* General reset for other buttons */
+.calendar-selected .rdp-button {
+  background-color: transparent !important; /* Reset background for all buttons */
+  border: none !important; /* Remove default borders */
+}

@@ -137,3 +137,33 @@ export const featuresData: Record<number, Feature> = {
     ],
   },
 };
+
+export const bookingsFormTimeSlots = [
+  "9:00 AM",
+  "10:00 AM",
+  "12:00 PM",
+  "1:00 PM",
+  "2:00 PM",
+  "3:00 PM",
+  "4:00 PM",
+  "5:00 PM",
+  "6:00 PM",
+];
+
+export const countryCodes = [
+  { code: "+1", label: "USA" },
+  { code: "+44", label: "UK" },
+  { code: "+91", label: "India" },
+  { code: "+971", label: "UAE" },
+];
+
+export const bookingsFormDefaultValues = {
+  fullName: "",
+  email: "",
+  countryCode: "+1",
+  phoneNumber: "",
+  callNotes: "",
+  consent: false,
+  date: new Date(),
+  time: bookingsFormTimeSlots[0],
+};

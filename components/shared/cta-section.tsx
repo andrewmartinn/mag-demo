@@ -1,4 +1,5 @@
 import { Button } from "../ui/button";
+import ScheduleCallDiaglog from "./schedule-call-dialog";
 
 export default function CtaSection() {
   return (
@@ -15,11 +16,9 @@ export default function CtaSection() {
         effective and enjoyable!
       </p>
       <div className="flex gap-8">
-        <Button className="bg-primary-400 hover:bg-primary-400 h-[48px] w-[170px] rounded-full font-semibold text-white shadow-none">
-          Schedule a call
-        </Button>
+        <ScheduleCallDiaglog />
         <Button
-          className="border-primary-400 h-[48px] w-[170px] rounded-full border-2 bg-white font-semibold shadow-none hover:bg-white"
+          className="h-[48px] w-[170px] rounded-full border-2 border-primary-400 bg-white font-semibold shadow-none hover:bg-white"
           variant="outline"
         >
           Free trial
