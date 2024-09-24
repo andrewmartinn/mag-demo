@@ -32,7 +32,7 @@ export async function POST(req: Request) {
         phoneNumber: result.data.phoneNumber,
         date: result.data.date,
         timeSlot: result.data.time,
-        callNotes: result.data.time || null,
+        callNotes: result.data.callNotes || null,
         checkbox: result.data.consent,
       },
     });

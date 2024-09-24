@@ -6,18 +6,15 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const getDateWithTime = (date: Date, time: string): Date => {
-  const [timePart, period] = time.split(" "); // Split time and period (AM/PM)
-  // eslint-disable-next-line prefer-const
-  let [hours, minutes] = timePart.split(":").map(Number);
+  const [hours, minutes] = time.split(":").map(Number);
+  const dateTime = new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+  );
 
-  // Convert to 24-hour format
-  if (period === "PM" && hours < 12) {
-    hours += 12; // Convert PM hours
-  } else if (period === "AM" && hours === 12) {
-    hours = 0; // Convert midnight
-  }
+  dateTime.setUTCHours(
+    hours + (time.includes("PM") && hours !== 12 ? 12 : 0),
+    minutes,
+  );
 
-  const dateTime = new Date(date);
-  dateTime.setHours(hours, minutes);
   return dateTime;
 };
