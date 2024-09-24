@@ -52,12 +52,15 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/bookings`,
       );
       const data = await response.json();
+      console.log(data);
 
       if (data.success) {
-        const bookingsData = data.bookingsData.map((booking: IBooking) => ({
-          ...booking,
-          date: new Date(booking.date),
-        }));
+        const bookingsData = data.adjustedBookingsData.map(
+          (booking: IBooking) => ({
+            ...booking,
+            date: new Date(booking.date),
+          }),
+        );
         setBookedSlots(bookingsData);
       }
     };
@@ -70,12 +73,22 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
     time: string,
     bookedSlots: IBooking[],
   ): boolean => {
+    const selectedDateMidnight = new Date(
+      selectedDate.getFullYear(),
+      selectedDate.getMonth(),
+      selectedDate.getDate(),
+    );
+
     return bookedSlots.some((slot) => {
-      const bookedDate = new Date(slot.date);
+      const slotDate = new Date(slot.date);
+      const slotDateMidnight = new Date(
+        slotDate.getFullYear(),
+        slotDate.getMonth(),
+        slotDate.getDate(),
+      );
+
       return (
-        bookedDate.getFullYear() === selectedDate.getFullYear() &&
-        bookedDate.getMonth() === selectedDate.getMonth() &&
-        bookedDate.getDate() === selectedDate.getDate() &&
+        slotDateMidnight.getTime() === selectedDateMidnight.getTime() &&
         slot.timeSlot === time
       );
     });
@@ -88,6 +101,11 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
 
   async function onSubmit(values: z.infer<typeof bookingsFormSchema>) {
     try {
+      const formattedValues = {
+        ...values,
+        date: new Date(values.date).toISOString(),
+      };
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/bookings`,
         {
@@ -95,7 +113,7 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(values),
+          body: JSON.stringify(formattedValues),
         },
       );
 

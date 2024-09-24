@@ -8,6 +8,16 @@ export async function POST(req: Request) {
     const body = await req.json();
     const parsedDate = new Date(body.date);
 
+    if (isNaN(parsedDate.getTime())) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Invalid date format",
+        },
+        { status: 400 },
+      );
+    }
+
     const dataToValidate = {
       ...body,
       date: parsedDate,
@@ -62,7 +72,12 @@ export async function GET() {
       },
     });
 
-    return NextResponse.json({ success: true, bookingsData });
+    const adjustedBookingsData = bookingsData.map((booking) => ({
+      ...booking,
+      date: new Date(booking.date).toISOString(),
+    }));
+
+    return NextResponse.json({ success: true, adjustedBookingsData });
   } catch (error) {
     console.log("Error fetching bookings", error);
     return NextResponse.json({
