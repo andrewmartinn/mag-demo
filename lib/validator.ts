@@ -6,7 +6,9 @@ export const leadFormSchema = z.object({
     .string()
     .email("Invalid email address")
     .min(5, "Email must be at least 5 characters"),
-  consent: z.boolean(),
+  consent: z
+    .boolean()
+    .refine((val) => val === true, "You must agree to the privacy policy"),
 });
 
 export const bookingsFormSchema = z.object({
@@ -15,16 +17,21 @@ export const bookingsFormSchema = z.object({
     .min(3, "Name must be atleast 3 characters")
     .max(150, "Name must be less than 200 characters"),
   email: z.string().email("Invalid email address"),
-  date: z.date({
-    required_error: "Date is required",
-    invalid_type_error: "Invalid date",
-  }),
+  date: z.date().refine(
+    (val) => {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return val >= today;
+    },
+    { message: "Date must be today or in the future" },
+  ),
   time: z.string().min(1, "Time is required"),
-  countryCode: z.string().min(1, "Country code is required"),
   phoneNumber: z
     .string()
     .min(1, "Phone number is required")
-    .regex(/^\d+$/, "Phone number must contain only digits"),
+    .refine((value) => /^[0-9]{10,15}$/.test(value), {
+      message: "Invalid phone number format",
+    }),
   callNotes: z
     .string()
     .max(500, "Call notes must be less than 500 characters")

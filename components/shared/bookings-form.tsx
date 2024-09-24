@@ -1,8 +1,10 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import toast from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,46 +20,119 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "../ui/checkbox";
+import { Label } from "../ui/label";
 import { Calendar } from "@/components/ui/calendar";
 import { Textarea } from "@/components/ui/textarea";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 import { bookingsFormSchema } from "@/lib/validator";
-import {
-  bookingsFormDefaultValues,
-  bookingsFormTimeSlots,
-  countryCodes,
-} from "@/constants";
+import { bookingsFormDefaultValues, bookingsFormTimeSlots } from "@/constants";
 import { format } from "date-fns";
-import { cn } from "@/lib/utils";
+import { cn, getDateWithTime } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
-import { Checkbox } from "../ui/checkbox";
-import { Label } from "../ui/label";
 
-const bookedSlots = ["10:00 AM", "3:00 PM"];
+import { IBooking } from "@/lib/definitions";
+import PhoneInput from "react-phone-input-2";
 
-export default function BookingsForm() {
+import "react-phone-input-2/lib/bootstrap.css";
+
+type BookingsFormProps = {
+  handleOpenChange: () => void;
+};
+
+export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
+  const [bookedSlots, setBookedSlots] = useState<IBooking[]>([]);
   const bookingsFormInitialValues = bookingsFormDefaultValues;
 
-  // 1. Define your form.
+  useEffect(() => {
+    const fetchBookings = async () => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/bookings`,
+      );
+      const data = await response.json();
+
+      if (data.success) {
+        const bookingsData = data.bookingsData.map((booking: IBooking) => ({
+          ...booking,
+          date: new Date(booking.date),
+        }));
+        setBookedSlots(bookingsData);
+      }
+    };
+
+    fetchBookings();
+  }, []);
+
+  const isSlotBooked = (
+    selectedDate: Date,
+    time: string,
+    bookedSlots: IBooking[],
+  ): boolean => {
+    const selectedDateWithTime = getDateWithTime(selectedDate, time);
+
+    return bookedSlots.some((slot) => {
+      const bookedDateWithTime = getDateWithTime(
+        new Date(slot.date),
+        slot.timeSlot,
+      );
+      return bookedDateWithTime.getTime() === selectedDateWithTime.getTime();
+    });
+  };
+
   const form = useForm<z.infer<typeof bookingsFormSchema>>({
     resolver: zodResolver(bookingsFormSchema),
     defaultValues: bookingsFormInitialValues,
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof bookingsFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof bookingsFormSchema>) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/bookings`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        },
+      );
+
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        console.log("Server error response: ", errorResponse);
+
+        if (errorResponse.issues?.fieldErrors) {
+          Object.keys(errorResponse.issues.fieldErrors).forEach((field) => {
+            errorResponse.issues.fieldErrors[field].forEach(
+              (message: string) => {
+                toast.error(`${field}: ${message}`);
+              },
+            );
+          });
+        } else {
+          toast.error("An unexpected error occoured");
+        }
+
+        if (errorResponse.issues?.formErrors.length > 0) {
+          errorResponse.issues.formErrors.forEach((message: string) => {
+            toast.error(message);
+          });
+        }
+      }
+
+      const result = await response.json();
+
+      if (result.success) {
+        form.reset();
+        handleOpenChange();
+        toast.success("Call booking successful");
+      }
+    } catch (error) {
+      console.error(error);
+      throw new Error("An unexpected error occurred. Please try again.");
+    }
   }
 
   return (
@@ -99,7 +174,9 @@ export default function BookingsForm() {
                         <Calendar
                           mode="single"
                           selected={field.value}
-                          onSelect={field.onChange}
+                          onSelect={(date: Date | undefined) =>
+                            field.onChange(date)
+                          }
                           initialFocus
                           className="calendar-selected"
                         />
@@ -114,40 +191,51 @@ export default function BookingsForm() {
             <FormField
               control={form.control}
               name="time"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-[14px] text-neutral-600">
-                    Select a time
-                  </FormLabel>
-                  <FormControl>
-                    <ToggleGroup
-                      type="single"
-                      className="toggle-group grid grid-cols-3 gap-4 md:grid-cols-4"
-                      value={field.value}
-                      onValueChange={field.onChange}
-                    >
-                      {bookingsFormTimeSlots.map((time) => (
-                        <ToggleGroupItem
-                          value={time}
-                          key={time}
-                          className={cn(
-                            "h-[43px] w-[100px] rounded-full border transition-colors",
-                            field.value === time
-                              ? "bg-green-500 text-white"
-                              : bookedSlots.includes(time)
-                                ? "cursor-not-allowed bg-gray-300 text-gray-500"
-                                : "bg-white text-black hover:bg-gray-100",
-                          )}
-                          disabled={bookedSlots.includes(time)}
-                        >
-                          {time}
-                        </ToggleGroupItem>
-                      ))}
-                    </ToggleGroup>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              render={({ field }) => {
+                const selectedDate = form.watch("date");
+
+                return (
+                  <FormItem>
+                    <FormLabel className="text-[14px] text-neutral-600">
+                      Select a time
+                    </FormLabel>
+                    <FormControl>
+                      <ToggleGroup
+                        type="single"
+                        className="toggle-group grid grid-cols-3 gap-4 md:grid-cols-4"
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        {bookingsFormTimeSlots.map((time) => {
+                          const isBooked = isSlotBooked(
+                            selectedDate,
+                            time,
+                            bookedSlots,
+                          );
+                          return (
+                            <ToggleGroupItem
+                              value={time}
+                              key={time}
+                              className={cn(
+                                "h-[43px] w-[100px] rounded-full border transition-colors",
+                                field.value === time
+                                  ? "bg-green-500 text-white"
+                                  : isBooked
+                                    ? "cursor-not-allowed bg-gray-300 text-gray-500"
+                                    : "bg-white text-black hover:bg-gray-100",
+                              )}
+                              disabled={isBooked}
+                            >
+                              {time}
+                            </ToggleGroupItem>
+                          );
+                        })}
+                      </ToggleGroup>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
             />
           </div>
           {/* name, email, phone, call notes, consent, submit */}
@@ -193,39 +281,29 @@ export default function BookingsForm() {
                       Phone number
                     </FormLabel>
                     <FormControl>
-                      <div className="flex h-[48px] border-neutral-600">
-                        <FormField
-                          control={form.control}
-                          name="countryCode"
-                          render={({ field: countryField }) => (
-                            <FormItem className="flex items-center">
-                              <Select
-                                value={countryField.value}
-                                onValueChange={countryField.onChange}
-                              >
-                                <SelectTrigger className="h-full w-[120px] rounded-bl-md rounded-br-none rounded-tl-md rounded-tr-none border-r border-neutral-600">
-                                  <SelectValue placeholder="Code" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {countryCodes.map((country) => (
-                                    <SelectItem
-                                      value={country.code}
-                                      key={country.code}
-                                    >
-                                      {country.label} {country.code}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                            </FormItem>
-                          )}
-                        />
-                        <Input
-                          type="tel"
-                          className="h-[48px] rounded-bl-none rounded-tl-none border-neutral-600"
-                          {...field}
-                        />
-                      </div>
+                      <PhoneInput
+                        country={"us"}
+                        onlyCountries={["us", "gb", "ae", "in"]}
+                        value={field.value}
+                        onChange={(phone) => field.onChange(phone)}
+                        inputStyle={{
+                          width: "100%",
+                          border: "1px solid #4D5973",
+                          borderRadius: "4px",
+                          height: "48px",
+                        }}
+                        dropdownStyle={{
+                          borderRadius: "4px",
+                          border: "1px solid #4D5973",
+                          width: "250px",
+                        }}
+                        isValid={(value) => {
+                          if (!value.match(/^[0-9]{10,15}$/)) {
+                            return false;
+                          }
+                          return true;
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -278,8 +356,19 @@ export default function BookingsForm() {
               <Button
                 className="ml-auto h-[48px] w-[183px] rounded-full bg-primary-400 text-white"
                 type="submit"
+                disabled={form.formState.isSubmitting}
               >
-                Schedule my call
+                {form.formState.isSubmitting ? (
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="text-surface inline-block size-6 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+                      role="status"
+                    />
+                    <span>Submitting...</span>
+                  </div>
+                ) : (
+                  `Schedule my call`
+                )}
               </Button>
             </div>
           </div>

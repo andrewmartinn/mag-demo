@@ -1,6 +1,8 @@
-import { quicksand } from "@/styles/fonts";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
+import { quicksand } from "@/styles/fonts";
+
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Flowspark - Digital Marketing Solutions",
@@ -14,7 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${quicksand.className} antialiased`}>{children}</body>
+      <body className={`${quicksand.className} antialiased`}>
+        <main>{children}</main>
+        <Toaster position="top-right" />
+      </body>
     </html>
   );
 }

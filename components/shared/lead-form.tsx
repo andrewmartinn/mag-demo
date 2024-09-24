@@ -16,9 +16,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { leadFormSchema } from "@/lib/validator";
+import toast from "react-hot-toast";
 
 export default function LeadForm() {
-  // 1. Define your form.
   const form = useForm<z.infer<typeof leadFormSchema>>({
     resolver: zodResolver(leadFormSchema),
     defaultValues: {
@@ -28,11 +28,52 @@ export default function LeadForm() {
     },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof leadFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof leadFormSchema>) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/leads`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        },
+      );
+
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        console.log("Server error response: ", errorResponse);
+
+        if (errorResponse.issues?.fieldErrors) {
+          Object.keys(errorResponse.issues.fieldErrors).forEach((field) => {
+            errorResponse.issues.fieldErrors[field].forEach(
+              (message: string) => {
+                toast.error(`${field}: ${message}`);
+              },
+            );
+          });
+        } else {
+          toast.error("An unexpected error occoured");
+        }
+
+        if (errorResponse.issues?.formErrors.length > 0) {
+          errorResponse.issues.formErrors.forEach((message: string) => {
+            toast.error(message);
+          });
+        }
+      }
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast.success("Submitted successfully");
+        form.reset();
+      }
+    } catch (error) {
+      console.error(error);
+      throw new Error("An unexpected error occurred. Please try again.");
+    }
   }
 
   return (
@@ -88,11 +129,24 @@ export default function LeadForm() {
             )}
           />
           <div className="flex gap-5">
-            <Button className="bg-primary-400 hover:bg-primary-400 h-[48px] w-[170px] rounded-full font-semibold text-white shadow-none">
-              Book your demo
+            <Button
+              disabled={form.formState.isSubmitting}
+              className="h-[48px] w-[170px] rounded-full bg-primary-400 font-semibold text-white shadow-none hover:bg-primary-400"
+            >
+              {form.formState.isSubmitting ? (
+                <div className="flex items-center gap-2">
+                  <div
+                    className="text-surface inline-block size-6 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+                    role="status"
+                  />
+                  <span>Submitting...</span>
+                </div>
+              ) : (
+                `Book your demo`
+              )}
             </Button>
             <Button
-              className="border-primary-400 h-[48px] w-[170px] rounded-full border-2 bg-white font-semibold shadow-none hover:bg-white"
+              className="h-[48px] w-[170px] rounded-full border-2 border-primary-400 bg-white font-semibold shadow-none hover:bg-white"
               variant="outline"
             >
               Free trial

@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -8,6 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import BookingsForm from "./bookings-form";
+import { useState } from "react";
 
 type ScheduleCallDialogProps = {
   isFooter?: boolean;
@@ -16,8 +19,11 @@ type ScheduleCallDialogProps = {
 export default function ScheduleCallDialog({
   isFooter = false,
 }: ScheduleCallDialogProps) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const handleOpenChange = (open: boolean) => setIsDialogOpen(open);
+
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button
           className={`${
@@ -36,7 +42,7 @@ export default function ScheduleCallDialog({
             Bookings Table
           </DialogDescription>
         </DialogHeader>
-        <BookingsForm />
+        <BookingsForm handleOpenChange={() => handleOpenChange(false)} />
       </DialogContent>
     </Dialog>
   );
