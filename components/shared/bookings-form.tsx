@@ -30,7 +30,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { bookingsFormSchema } from "@/lib/validator";
 import { bookingsFormDefaultValues, bookingsFormTimeSlots } from "@/constants";
 import { format } from "date-fns";
-import { cn, getDateWithTime } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 
 import { IBooking } from "@/lib/definitions";
@@ -70,14 +70,14 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
     time: string,
     bookedSlots: IBooking[],
   ): boolean => {
-    const selectedDateWithTime = getDateWithTime(selectedDate, time);
-
     return bookedSlots.some((slot) => {
-      const bookedDateWithTime = getDateWithTime(
-        new Date(slot.date),
-        slot.timeSlot,
+      const bookedDate = new Date(slot.date);
+      return (
+        bookedDate.getFullYear() === selectedDate.getFullYear() &&
+        bookedDate.getMonth() === selectedDate.getMonth() &&
+        bookedDate.getDate() === selectedDate.getDate() &&
+        slot.timeSlot === time
       );
-      return bookedDateWithTime.getTime() === selectedDateWithTime.getTime();
     });
   };
 
