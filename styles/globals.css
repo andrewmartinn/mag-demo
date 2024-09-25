@@ -108,6 +108,17 @@
   color: #000000 !important; /* Default text color */
 }
 
+/* Styles for dark mode */
+.dark .toggle-group [data-state="on"] {
+  background-color: #32baae !important; /* Adjusted background color for dark mode */
+  color: #e5e7eb !important; /* Adjusted text color for dark mode */
+}
+
+.dark .toggle-group [data-state="off"] {
+  background-color: #1b2845 !important; /* Dark background for off state */
+  color: #ffffff !important; /* Light text color for dark mode */
+}
+
 /* Reset the background for the parent td when a day is selected */
 .calendar-selected td {
   background-color: transparent !important; /* Ensure transparency */

@@ -15,10 +15,10 @@ export default function CtaSection() {
         today and see firsthand how we can make your marketing efforts more
         effective and enjoyable!
       </p>
-      <div className="flex gap-8">
+      <div className="flex w-full gap-4 sm:flex-row sm:justify-center sm:gap-8">
         <ScheduleCallDiaglog />
         <Button
-          className="h-[48px] w-[170px] rounded-full border-2 border-primary-400 bg-white font-semibold shadow-none hover:bg-white"
+          className="hidden h-[48px] w-[170px] rounded-full border-2 border-primary-400 bg-white font-semibold shadow-none hover:bg-white dark:bg-neutral-800 sm:flex"
           variant="outline"
         >
           Free trial

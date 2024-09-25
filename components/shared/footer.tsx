@@ -7,9 +7,9 @@ export default function Footer() {
   return (
     <footer className="w-full rounded-t-[5rem] bg-[#4D5973] text-[#F5F5F7]">
       <div className="container mx-auto p-10">
-        <div className="mb-10 grid grid-cols-2 gap-2 pt-4 sm:grid-cols-4">
+        <div className="mb-10 grid grid-cols-2 gap-10 pt-4 sm:grid-cols-4 sm:gap-2">
           {footerLinks.map((column, index) => (
-            <div key={index} className="mx-auto max-w-lg">
+            <div key={index} className="mx-auto">
               <h5 className="mb-2 text-[16px] font-semibold">
                 {column.heading}
               </h5>

@@ -161,13 +161,13 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
           className="flex flex-col gap-16"
         >
           {/* date and time picker */}
-          <div className="mx-auto mt-10 flex w-full flex-col gap-16 sm:max-w-4xl sm:flex-row">
+          <div className="mx-auto mt-10 flex w-full flex-col justify-around gap-16 sm:flex-row">
             <FormField
               control={form.control}
               name="date"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-[14px] text-neutral-600">
+                <FormItem className="text-left">
+                  <FormLabel className="text-[14px] text-neutral-600 dark:text-neutral-300">
                     Select a date
                   </FormLabel>
                   <FormControl>
@@ -176,7 +176,7 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "flex w-full items-center justify-between text-left font-normal sm:w-[280px]",
+                            "flex w-full items-center justify-between text-left font-normal dark:border-primary-400 dark:bg-neutral-800 sm:w-[280px]",
                             !field.value && "text-muted-foreground",
                           )}
                         >
@@ -196,7 +196,7 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
                             field.onChange(date)
                           }
                           initialFocus
-                          className="calendar-selected"
+                          className="calendar-selected dark:bg-neutral-600"
                         />
                       </PopoverContent>
                     </Popover>
@@ -213,8 +213,8 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
                 const selectedDate = form.watch("date");
 
                 return (
-                  <FormItem>
-                    <FormLabel className="text-[14px] text-neutral-600">
+                  <FormItem className="text-left">
+                    <FormLabel className="text-[14px] text-neutral-600 dark:text-neutral-300">
                       Select a time
                     </FormLabel>
                     <FormControl>
@@ -240,7 +240,7 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
                                   ? "bg-green-500 text-white"
                                   : isBooked
                                     ? "cursor-not-allowed bg-gray-300 text-gray-500"
-                                    : "bg-white text-black hover:bg-gray-100",
+                                    : "border-2 border-primary-400 bg-white text-black hover:bg-gray-100",
                               )}
                               disabled={isBooked}
                             >
@@ -257,18 +257,21 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
             />
           </div>
           {/* name, email, phone, call notes, consent, submit */}
-          <div className="flex flex-col gap-8 sm:flex-row">
+          <div className="flex flex-col gap-8 rounded-xl p-4 dark:bg-neutral-600 sm:flex-row sm:p-8">
             <div className="flex flex-1 flex-col gap-4">
               <FormField
                 control={form.control}
                 name="fullName"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-[14px] text-neutral-600">
+                  <FormItem className="text-left">
+                    <FormLabel className="text-[14px] text-neutral-600 dark:text-neutral-300">
                       Full name
                     </FormLabel>
                     <FormControl>
-                      <Input className="h-[48px] border-[#4D5973]" {...field} />
+                      <Input
+                        className="h-[48px] border-[#4D5973] dark:bg-neutral-300"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -278,12 +281,15 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
                 control={form.control}
                 name="email"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-[14px] text-neutral-600">
+                  <FormItem className="text-left">
+                    <FormLabel className="text-[14px] text-neutral-600 dark:text-neutral-300">
                       Email address
                     </FormLabel>
                     <FormControl>
-                      <Input className="h-[48px] border-[#4D5973]" {...field} />
+                      <Input
+                        className="h-[48px] border-[#4D5973] dark:bg-neutral-300"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -294,8 +300,8 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
                 control={form.control}
                 name="phoneNumber"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-[14px] text-neutral-600">
+                  <FormItem className="text-left">
+                    <FormLabel className="text-[14px] text-neutral-600 dark:text-neutral-300">
                       Phone number
                     </FormLabel>
                     <FormControl>
@@ -333,13 +339,13 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
                 control={form.control}
                 name="callNotes"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-[14px] text-neutral-600">
+                  <FormItem className="text-left">
+                    <FormLabel className="text-[14px] text-neutral-600 dark:text-neutral-300">
                       Call notes
                     </FormLabel>
                     <FormControl>
                       <Textarea
-                        className="h-[106px] resize-none border-[#4D5973]"
+                        className="h-[106px] resize-none border-[#4D5973] dark:bg-neutral-300"
                         {...field}
                       />
                     </FormControl>
@@ -360,7 +366,7 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
                           id="terms"
                           className="h-[20px] w-[20px] appearance-none rounded-sm border-2 border-primary-400 checked:border-transparent checked:bg-primary-400"
                         />
-                        <Label className="line-clamp-2 max-w-md text-[14px] text-neutral-600">
+                        <Label className="max-w-md text-[12px] text-neutral-600 dark:text-neutral-300 sm:line-clamp-2 sm:text-[14px]">
                           I consent to my details being processed in line with
                           the <span className="underline">privacy policy.</span>
                         </Label>
@@ -372,7 +378,7 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
               />
 
               <Button
-                className="ml-auto h-[48px] w-[183px] rounded-full bg-primary-400 text-white"
+                className="h-[48px] w-full rounded-full bg-primary-400 text-white sm:ml-auto sm:w-[183px]"
                 type="submit"
                 disabled={form.formState.isSubmitting}
               >

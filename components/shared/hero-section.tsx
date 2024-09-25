@@ -4,17 +4,17 @@ import LeadForm from "./lead-form";
 export default function HeroSection() {
   return (
     <section className="container mx-auto mb-24 p-2">
-      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-10 p-10">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 p-10 sm:grid-cols-2">
         {/* image & text content */}
         <div className="flex flex-col">
-          <h1 className="mb-2 text-[48px] font-bold leading-tight">
+          <h1 className="mb-2 text-[48px] font-bold leading-tight dark:text-neutral-300">
             FlowSpark
           </h1>
-          <p className="mb-6 text-[16px] font-semibold uppercase">
+          <p className="mb-6 text-[16px] font-semibold uppercase dark:text-neutral-300">
             Digital Marketing Solutions
           </p>
           <p
-            className="mb-4 max-w-md text-[16px]"
+            className="mb-4 max-w-md text-[16px] dark:text-neutral-300"
             style={{ lineHeight: "22.4px" }}
           >
             We believe that marketing shouldn&rsquo;t be a headache, so

@@ -3,10 +3,8 @@ import { Button } from "../ui/button";
 import GlobeIcon from "@/assets/icons/globe-icon";
 import ChatIcon from "@/assets/icons/chat-icon";
 import SupportIcon from "@/assets/icons/support-icon";
-import SystemIcon from "@/assets/icons/system-icon";
-import SunIcon from "@/assets/icons/sun-icon";
-import MoonIcon from "@/assets/icons/moon-icon";
 import UserIcon from "@/assets/icons/user-icon";
+import ThemeToggle from "./theme-toggle";
 
 export default function Banner() {
   return (
@@ -16,7 +14,7 @@ export default function Banner() {
         <div className="flex gap-6">
           <Button
             variant="ghost"
-            className="flex h-[24px] items-center justify-between gap-2 rounded-full bg-neutral-200 px-2 py-1 text-neutral-600"
+            className="flex h-[24px] items-center justify-between gap-2 rounded-full bg-neutral-200 px-2 py-1 text-neutral-600 dark:bg-neutral-600 dark:text-neutral-300"
           >
             <GlobeIcon />
             <span className="text-[10px] font-semibold">EN</span>
@@ -24,7 +22,7 @@ export default function Banner() {
           </Button>
           <Button
             variant="ghost"
-            className="flex h-[24px] items-center justify-between gap-2 rounded-full bg-neutral-200 px-2 py-1 text-neutral-600"
+            className="hidden h-[24px] items-center justify-between gap-2 rounded-full bg-neutral-200 px-2 py-1 text-neutral-600 dark:bg-neutral-600 dark:text-neutral-300 sm:flex"
           >
             <ChatIcon />
             <span className="text-[10px] font-semibold uppercase">
@@ -33,7 +31,7 @@ export default function Banner() {
           </Button>
           <Button
             variant="ghost"
-            className="flex h-[24px] items-center justify-between gap-2 rounded-full bg-neutral-200 px-2 py-1 text-neutral-600"
+            className="hidden h-[24px] items-center justify-between gap-2 rounded-full bg-neutral-200 px-2 py-1 text-neutral-600 dark:bg-neutral-600 dark:text-neutral-300 sm:flex"
           >
             <SupportIcon />
             <span className="text-[10px] font-semibold uppercase">Support</span>
@@ -41,20 +39,15 @@ export default function Banner() {
         </div>
         {/* theme, login */}
         <div className="flex gap-6">
+          <ThemeToggle />
           <Button
             variant="ghost"
-            className="flex h-[24px] items-center justify-between gap-2 rounded-full bg-neutral-200 px-2 py-1 text-neutral-600"
-          >
-            <SystemIcon />
-            <SunIcon />
-            <MoonIcon />
-          </Button>
-          <Button
-            variant="ghost"
-            className="flex h-[24px] items-center justify-between gap-2 rounded-full bg-neutral-200 px-2 py-1 text-neutral-600"
+            className="flex h-[24px] items-center justify-between gap-2 rounded-full bg-neutral-200 px-2 py-1 text-neutral-600 dark:bg-neutral-600 dark:text-neutral-300"
           >
             <UserIcon />
-            <span className="text-[10px] font-semibold uppercase">Log in</span>
+            <span className="hidden text-[10px] font-semibold uppercase sm:block">
+              Log in
+            </span>
           </Button>
         </div>
       </div>

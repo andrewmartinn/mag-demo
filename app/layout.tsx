@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${quicksand.className} antialiased`}>
-        <main>{children}</main>
+        <main className="dark:bg-neutral-800 dark:text-white">{children}</main>
         <Toaster position="top-right" />
       </body>
     </html>

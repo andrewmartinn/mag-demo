@@ -66,14 +66,14 @@ export default function ImageCarousel({
           <div className="embla__container">
             {images.map((item, index) => (
               <div className="embla__slide" key={index}>
-                <div className="mx-auto h-[460px] w-[500px] overflow-hidden rounded-lg">
+                <div className="mx-auto h-[460px] w-full overflow-hidden rounded-lg">
                   <Image
                     quality={96}
                     height={460}
                     width={500}
                     src={item}
                     alt="image"
-                    className="rounde-lg h-[460px] w-[500px] object-cover"
+                    className="h-full w-full rounded-lg object-cover"
                   />
                 </div>
               </div>
@@ -84,7 +84,7 @@ export default function ImageCarousel({
           <Button
             variant="outline"
             size="icon"
-            className="embla__prev h-[32px] w-[32px] border-2 border-primary-400 bg-[#F1FCFB] text-primary-400 hover:bg-[#F1FCFB]"
+            className="embla__prev h-[32px] w-[32px] border-2 border-primary-400 bg-[#F1FCFB] text-primary-400 hover:bg-[#F1FCFB] dark:bg-neutral-600"
             onClick={scrollPrev}
           >
             <ArrowLeft className="size-5" />
@@ -96,7 +96,7 @@ export default function ImageCarousel({
           <Button
             variant="outline"
             size="icon"
-            className="embla__next h-[32px] w-[32px] border-2 border-primary-400 bg-[#F1FCFB] text-primary-400 hover:bg-[#F1FCFB]"
+            className="embla__next h-[32px] w-[32px] border-2 border-primary-400 bg-[#F1FCFB] text-primary-400 hover:bg-[#F1FCFB] dark:bg-neutral-600"
             onClick={scrollNext}
           >
             <ArrowRight className="size-5" />

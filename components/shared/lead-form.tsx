@@ -87,7 +87,10 @@ export default function LeadForm() {
               <FormItem>
                 <FormLabel>Full Name</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input
+                    className="h-[48px] dark:bg-neutral-600 dark:text-neutral-300"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -100,7 +103,11 @@ export default function LeadForm() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" {...field} />
+                  <Input
+                    type="email"
+                    className="h-[48px] dark:bg-neutral-600 dark:text-neutral-300"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -118,7 +125,7 @@ export default function LeadForm() {
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
-                    <div className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                    <div className="text-[12px] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 sm:text-sm">
                       I consent to my details being processed in line with the{" "}
                       <span className="underline">privacy policy</span>.
                     </div>
@@ -131,7 +138,7 @@ export default function LeadForm() {
           <div className="flex gap-5">
             <Button
               disabled={form.formState.isSubmitting}
-              className="h-[48px] w-[170px] rounded-full bg-primary-400 font-semibold text-white shadow-none hover:bg-primary-400"
+              className="h-[48px] w-full rounded-full bg-primary-400 font-semibold text-white shadow-none hover:bg-primary-400 sm:w-[170px]"
             >
               {form.formState.isSubmitting ? (
                 <div className="flex items-center gap-2">
@@ -146,13 +153,13 @@ export default function LeadForm() {
               )}
             </Button>
             <Button
-              className="h-[48px] w-[170px] rounded-full border-2 border-primary-400 bg-white font-semibold shadow-none hover:bg-white"
+              className="hidden h-[48px] w-[170px] rounded-full border-2 border-primary-400 bg-white font-semibold shadow-none hover:bg-white dark:bg-neutral-800 sm:flex"
               variant="outline"
             >
               Free trial
             </Button>
           </div>
-          <p className="text-[14px] font-semibold text-[#CBCED4]">
+          <p className="text-center text-[14px] font-semibold text-[#CBCED4] sm:text-left">
             Free 14-day trial. Cancel anytime.
           </p>
         </form>
