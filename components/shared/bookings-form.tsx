@@ -269,7 +269,7 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="h-[48px] border-[#4D5973] dark:bg-neutral-300"
+                        className="h-[48px] border-[#4D5973] dark:bg-neutral-300 dark:text-neutral-600"
                         {...field}
                       />
                     </FormControl>
@@ -287,7 +287,7 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className="h-[48px] border-[#4D5973] dark:bg-neutral-300"
+                        className="h-[48px] border-[#4D5973] dark:bg-neutral-300 dark:text-neutral-600"
                         {...field}
                       />
                     </FormControl>
@@ -345,7 +345,7 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
                     </FormLabel>
                     <FormControl>
                       <Textarea
-                        className="h-[106px] resize-none border-[#4D5973] dark:bg-neutral-300"
+                        className="h-[106px] resize-none border-[#4D5973] dark:bg-neutral-300 dark:text-neutral-600"
                         {...field}
                       />
                     </FormControl>
