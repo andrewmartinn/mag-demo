@@ -99,24 +99,23 @@
 }
 
 .toggle-group [data-state="on"] {
-  background-color: #32baae !important; /* bg-green-500 */
-  color: #ffffff !important; /* text-white */
+  background-color: #32baae !important;
+  color: #ffffff !important;
 }
 
 .toggle-group [data-state="off"] {
-  background-color: #ffffff !important; /* Default background */
-  color: #000000 !important; /* Default text color */
+  background-color: #ffffff !important;
+  color: #000000 !important;
 }
 
-/* Styles for dark mode */
 .dark .toggle-group [data-state="on"] {
-  background-color: #32baae !important; /* Adjusted background color for dark mode */
-  color: #e5e7eb !important; /* Adjusted text color for dark mode */
+  background-color: #32baae !important;
+  color: #e5e7eb !important;
 }
 
 .dark .toggle-group [data-state="off"] {
-  background-color: #1b2845 !important; /* Dark background for off state */
-  color: #ffffff !important; /* Light text color for dark mode */
+  background-color: #1b2845 !important;
+  color: #ffffff !important;
 }
 
 /* Reset the background for the parent td when a day is selected */

@@ -144,8 +144,8 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
 
       if (result.success) {
         form.reset();
-        handleOpenChange();
         toast.success("Call booking successful");
+        setTimeout(() => handleOpenChange(), 500);
       }
     } catch (error) {
       console.error(error);
@@ -154,7 +154,7 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
   }
 
   return (
-    <div className="">
+    <div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -239,7 +239,7 @@ export default function BookingsForm({ handleOpenChange }: BookingsFormProps) {
                                 field.value === time
                                   ? "bg-green-500 text-white"
                                   : isBooked
-                                    ? "cursor-not-allowed bg-gray-300 text-gray-500"
+                                    ? "cursor-not-allowed bg-gray-300 text-gray-500 disabled:dark:border-neutral-600"
                                     : "border-2 border-primary-400 bg-white text-black hover:bg-gray-100",
                               )}
                               disabled={isBooked}
